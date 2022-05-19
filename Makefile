@@ -4,6 +4,10 @@ MERGEMOCK_BIN=./mergemock
 GIT_VER := $(shell git describe --tags --always --dirty="-dev")
 DOCKER_REPO := flashbots/mev-boost
 
+dev:
+	docker compose build
+	docker compose run --service-ports mevboost
+
 build:
 	go build ./cmd/mev-boost
 
@@ -38,6 +42,12 @@ cover-html:
 
 run:
 	./mev-boost
+
+run-testtool:
+	go run cmd/signer/*.go
+
+run-docker:
+	./mev-boost -host=0.0.0.0 -relays=host.docker.internal:28545
 
 run-boost-with-relay:
 	./mev-boost -relays 127.0.0.1:28545

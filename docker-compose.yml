@@ -1,0 +1,16 @@
+version: "3.5"
+services:
+  mevboost:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile.build
+    entrypoint: /bin/sh
+    command: ["-c", "bash"]
+    volumes:
+      - ./:/build
+    ports:
+      - "18550:18550"
+      - "28545:28545"
+
+
+

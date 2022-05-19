@@ -141,6 +141,7 @@ func (m *BoostService) handleRegisterValidator(w http.ResponseWriter, req *http.
 		return
 	}
 
+	fmt.Printf("SIG[%d]='%s'\n", len(payload.Signature), payload.Signature)
 	if len(payload.Signature) != 96 {
 		http.Error(w, errInvalidSignature.Error(), http.StatusBadRequest)
 		return
@@ -160,6 +161,7 @@ func (m *BoostService) handleRegisterValidator(w http.ResponseWriter, req *http.
 
 			_, err := makeRequest(context.Background(), m.httpClient, http.MethodPost, url, payload)
 			if err != nil {
+				fmt.Printf("ERR=%+v\n", err)
 				log.WithError(err).Warn("error in registerValidator to relay")
 				return
 			}
